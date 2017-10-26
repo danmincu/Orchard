@@ -1,0 +1,16 @@
+﻿@using Orchard.Utility.Extensions
+
+@{
+    Style.Require("jQueryUI_Orchard");
+
+    Script.Require("jQuery");
+    Script.Require("jQueryUtils");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Widget");
+    Script.Require("jQueryUI_Autocomplete");
+    Script.Include("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization").AtHead();
+    Script.Include("LocationScript.js").AtFoot();
+}
+<p class="text-field">
+    <input type="hidden" class = "locationFieldPickerDisplay" value=@Model.LocationLatLong />    
+</p>

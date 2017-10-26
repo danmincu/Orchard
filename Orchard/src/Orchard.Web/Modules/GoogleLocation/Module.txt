@@ -1,0 +1,10 @@
+﻿Name: GoogleLocation
+AntiForgery: enabled
+Author: Dan Mincu
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Picks a location(latitude + longitude) using a Goole Map
+Features:
+    GoogleLocation:
+        Description: Description for feature GoogleLocation.

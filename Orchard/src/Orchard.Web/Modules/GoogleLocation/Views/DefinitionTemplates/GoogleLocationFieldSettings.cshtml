@@ -1,0 +1,24 @@
+﻿@model GoogleLocation.Settings.GoogleLocationFieldSettings
+@using GoogleLocation.Settings;
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.DisplayOptions)"
+      class="forcheckbox">Display options</label>  
+    <select id="@Html.FieldIdFor(m => m.DisplayOptions)"
+      name="@Html.FieldNameFor(m => m.DisplayOptions)">
+        @Html.SelectOption(GoogleLocationFieldDisplayOptions.NameOnly,
+          Model.DisplayOptions == GoogleLocationFieldDisplayOptions.NameOnly,
+          "Name only")
+        @Html.SelectOption(GoogleLocationFieldDisplayOptions.NameAndLinkToMap,
+          Model.DisplayOptions 
+            == GoogleLocationFieldDisplayOptions.NameAndLinkToMap,
+          "Name and Link to Map")
+        @Html.SelectOption(GoogleLocationFieldDisplayOptions.NameAndEmbeddedMap,
+          Model.DisplayOptions 
+            == GoogleLocationFieldDisplayOptions.NameAndEmbeddedMap,
+          "Name and Embedded Map")
+    </select> 
+
+    @Html.ValidationMessageFor(m => m.DisplayOptions)
+
+</fieldset>

@@ -1,0 +1,21 @@
+﻿@using Orchard.Utility.Extensions
+@model LocationPickerField.ViewModels.LocationPickerFieldViewModel
+@{
+    Style.Require("jQueryUI_Orchard");
+
+    Script.Require("jQuery");
+    Script.Require("jQueryUtils");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Widget");
+    Script.Require("jQueryUI_Autocomplete");
+    Script.Include("LocationScript.js").AtFoot();
+
+}
+<fieldset>  
+    <label class="forpicker"
+           for="@Html.FieldIdFor(m => Model.LocationLatLong)">Pick the location</label>
+    @Html.EditorFor(m => m.LocationLatLong, new { htmlAttributes = new { @type="hidden", @class = "locationFieldPicker" } })
+</fieldset>
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+<script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>

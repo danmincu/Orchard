@@ -1,0 +1,13 @@
+﻿Name: LocationPerspective
+AntiForgery: enabled
+Author: Dan Mincu
+Website: http://www.telekad.com
+Version: 0.2
+OrchardVersion: 1.9.1
+Description: This module is displaying content on a map using a location field that the content should contain.
+Features: Both points and heat map are supported. 
+    LocationPerspective:
+        Description: Future functionality will 
+		a) center and zoom the initial map 
+		b) use different icons to denote different events
+		c) it will "sample" to allow maps with millions of points to be displayed

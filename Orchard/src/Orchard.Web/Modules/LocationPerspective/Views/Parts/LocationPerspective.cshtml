@@ -1,0 +1,136 @@
+﻿@using Orchard.UI.Resources
+<style>
+    html, body, #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+    }
+
+    /*
+    Provide the following styles for both ID and class,
+    where ID represents an actual existing "panel" with
+    JS bound to its name, and the class is just non-map
+    content that may already have a different ID with
+    JS bound to its name.
+    */
+
+    #panel, .panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+
+        #panel select, #panel input, .panel select, .panel input {
+            font-size: 15px;
+        }
+
+        #panel select, .panel select {
+            width: 100%;
+        }
+
+        #panel i, .panel i {
+            font-size: 12px;
+        }
+</style>
+
+@{
+    Script.Include("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization").AtHead();
+    Script.Include("https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js").AtHead();
+}
+
+<script>
+    function initialize() {
+
+        if ("@Model.MapType".localeCompare("heatmap") == 0) {
+            var mapOptions = {
+                zoom: 4,
+                center: new google.maps.LatLng(40, -95),
+                mapTypeId: google.maps.MapTypeId.HYBRID
+
+            };
+        }
+        else {
+            var mapOptions = {
+                zoom: 4,
+                center: new google.maps.LatLng(40, -95),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+        }
+
+        var map = new google.maps.Map(document.getElementById('map-canvas-' + '@Model.MapType'), mapOptions);
+
+
+        $.ajax({
+            url: "LocationPerspective/DocumentLocation/getall?sourceDocuments=" + "@Model.SourceDocuments" + '&jsoncallback=?',
+            crossDomain: true,
+            dataType: 'jsonp',
+            contentType: "application/json; charset=utf-8;",
+            type: "GET",
+            async: false,
+            //jsonpCallback:'jsonpCallback',
+            error: function (xhr, status, error) { console.log(status + '; ' + error); }
+        })
+      .success(function (data) {
+          if ("@Model.MapType".localeCompare("heatmap") == 0) {
+              var taxiData = [];
+              var heatmap;
+              data.forEach(
+              function addValue(value) {                 
+                  var latlngStr = value.location.split(",", 2);
+                  var lat = parseFloat(latlngStr[0]);
+                  var lng = parseFloat(latlngStr[1]);
+                  var myLatlng = new google.maps.LatLng(lat, lng);
+                  taxiData.push(myLatlng);
+                  var pointArray = new google.maps.MVCArray(taxiData);
+
+                  heatmap = new google.maps.visualization.HeatmapLayer({
+                      data: pointArray
+                  });
+              }
+            );
+              heatmap.set('radius', 20);
+              heatmap.setMap(map);
+          }
+          else {
+              data.forEach(
+                function showValue(value) {                    
+                    var latlngStr = value.location.split(",", 2);
+                    var lat = parseFloat(latlngStr[0]);
+                    var lng = parseFloat(latlngStr[1]);
+                    var myLatlng = new google.maps.LatLng(lat, lng);
+    
+                    var image = "http://maps.google.com/mapfiles/kml/pal4/icon52.png";
+                    //"http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png";
+
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        icon: image,
+                        title: value.title,
+                        url: value.path
+                    });
+                    marker.setMap(map);
+                    google.maps.event.addListener(marker, 'click', function () { window.open(this.url); });
+                }
+              );
+          }
+      })
+          .error(function (XHR, textStatus, errorThrown) {
+              console.warn("error: " + textStatus);
+              console.warn("error: " + errorThrown);
+          });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<div id="map-canvas-@Html.Raw(@Model.MapType)" style="width:@Html.Raw(@Model.Width)px; height: @Html.Raw(@Model.Height)px;"></div>

@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@{
+Script.Require("jQuery");
+Script.Include("http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2");
+var mapIndex = (Context.Items["Bing.Map.Index"] as int?) ?? 0;
+Context.Items["Bing.Map.Index"] = mapIndex + 1;
+}
+@using(Script.Foot()) {
+<script type="text/javascript">
+    $(function() {
+        var map = new VEMap("BingMap@(mapIndex)"),
+            latlong = new VELatLong(@Model.Latitude.ToString(CultureInfo.InvariantCulture), @Model.Longitude.ToString(CultureInfo.InvariantCulture)),
+            selStyle = VEMapStyle["@Model.Mode"];
+        map.LoadMap(latlong, @Model.Zoom, selStyle, false);
+        map.AddShape(new VEShape(VEShapeType.Pushpin, latlong));
+    });
+</script>
+}
+<div id="BingMap@(mapIndex)" style="position:relative; width:@(Model.Width)px; height:@(Model.Height)px;"></div>

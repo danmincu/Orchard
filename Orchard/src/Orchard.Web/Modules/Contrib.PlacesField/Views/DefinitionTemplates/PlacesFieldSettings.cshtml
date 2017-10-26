@@ -1,0 +1,24 @@
+﻿@model Contrib.PlacesField.Settings.PlacesFieldSettings
+@using Contrib.PlacesField.Settings;
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.DisplayOptions)"
+      class="forcheckbox">Display options</label>  
+    <select id="@Html.FieldIdFor(m => m.DisplayOptions)"
+      name="@Html.FieldNameFor(m => m.DisplayOptions)">
+        @Html.SelectOption(PlacesFieldDisplayOptions.NameOnly,
+          Model.DisplayOptions == PlacesFieldDisplayOptions.NameOnly,
+          "Name only")
+        @Html.SelectOption(PlacesFieldDisplayOptions.NameAndLinkToMap,
+          Model.DisplayOptions 
+            == PlacesFieldDisplayOptions.NameAndLinkToMap,
+          "Name and Link to Map")
+        @Html.SelectOption(PlacesFieldDisplayOptions.NameAndEmbeddedMap,
+          Model.DisplayOptions 
+            == PlacesFieldDisplayOptions.NameAndEmbeddedMap,
+          "Name and Embedded Map")
+    </select> 
+
+    @Html.ValidationMessageFor(m => m.DisplayOptions)
+
+</fieldset>

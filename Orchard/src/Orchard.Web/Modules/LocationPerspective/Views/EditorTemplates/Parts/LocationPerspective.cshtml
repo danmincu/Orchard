@@ -1,0 +1,37 @@
+﻿@model LocationPerspective.Models.LocationPerspectivePart
+
+<fieldset>
+    <legend>LocationPerspective Widget</legend>
+
+    <div class="editor-label">
+        Source Document to display on the map
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.SourceDocuments)
+        @Html.ValidationMessageFor(model => model.SourceDocuments)
+    </div>
+
+    <div class="editor-label">
+        Map type(heatmap/points)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.MapType)
+        @Html.ValidationMessageFor(model => model.MapType)
+    </div>
+
+    <div class="editor-label">
+        Height
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Height)
+        @Html.ValidationMessageFor(model => model.Height)
+    </div>
+
+    <div class="editor-label">
+        Width
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Width)
+        @Html.ValidationMessageFor(model => model.Width)
+    </div>
+</fieldset>

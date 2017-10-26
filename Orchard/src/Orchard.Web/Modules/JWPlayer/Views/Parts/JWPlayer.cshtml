@@ -1,0 +1,16 @@
+﻿@using Orchard.UI.Resources
+@{ Script.Require("jwplayer").AtHead(); }
+<div id='mediaspace'>This text will be replaced</div>
+<script type="text/javascript">jwplayer.key = "WDbEa3iw8lYGh0+mRo+/HP99xwNWaU76kKZ7sA==";</script>
+<script type='text/javascript'>
+    jwplayer('mediaspace').setup({
+        'flashplayer': '@Url.Content(Model.PlayerSource)',
+        'file': '@Url.Content(@Model.MediaFile)',
+        'autostart': '@Model.AutoStart',
+        @if (Model.Repeat) { 
+        <text>'repeat' : 'always',</text>
+        }
+        'width': '@Model.Width',
+        'height': '@Model.Height'
+    });
+</script>

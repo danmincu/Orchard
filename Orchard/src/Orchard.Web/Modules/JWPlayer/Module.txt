@@ -1,0 +1,11 @@
+Name: JWPlayer
+AntiForgery: enabled
+Author: Dan Mincu
+Website: http://www.telekad.com
+Version: 0.1
+OrchardVersion: 1.9.1
+Category: Media
+Description: JW Flash Player Widget
+Features:
+    JWPlayer:
+        Description: JW Flash Player Widget

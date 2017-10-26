@@ -1,0 +1,83 @@
+﻿@using Orchard.Utility.Extensions
+@model Contrib.PlacesField.ViewModels.PlacesFieldViewModel
+@{
+    Style.Require("jQueryUI_Orchard");    
+
+    Script.Require("jQuery");
+    Script.Require("jQueryUtils");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Widget");
+    Script.Require("jQueryUI_Autocomplete");
+}
+<fieldset>
+    <label for="@Html.FieldIdFor(m => Model.PlaceName)">
+        @Model.Name.CamelFriendly()</label>
+    <p />
+    <label class="forpicker"
+        for="@Html.FieldIdFor(m => Model.Category)_CategoriesSelector">Category</label>
+    <input type="text" 
+        id="@Html.FieldIdFor(m => Model.Category)_CategoriesSelector" 
+        class="text" />
+    @Html.HiddenFor(m => m.Category)
+
+    <p />
+    <label class="forpicker"
+        for="@Html.FieldIdFor(m => Model.PostalCode)">Postal Code</label>
+    @Html.EditorFor(m => m.PostalCode)
+
+    <p />
+    <label class="forpicker"
+        for="@Html.FieldIdFor(m => Model.PlaceName)">Place</label>
+    @Html.EditorFor(m => m.PlaceName)
+    @Html.HiddenFor(m => m.PlaceLatLong)
+
+</fieldset>
+
+
+@using(Script.Foot()) {
+<script type="text/javascript">
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    $(function () {
+
+        $("#@Html.FieldIdFor(m => Model.Category)_CategoriesSelector")
+            .autocomplete({
+                source: '@Url.Content("~/Admin/PlacesField/Yelp/Categories")',
+                minLength: 2,
+                select: function (event, ui) {
+                    $("#@Html.FieldIdFor(m => Model.Category)")
+                        .val(ui.item.value);
+                    $("#@Html.FieldIdFor(m => Model.Category)_CategoriesSelector")
+                        .val(ui.item.label);
+                    return false;
+                }
+            });
+
+        $("#@Html.FieldIdFor(m => Model.PlaceName)").focus(function () {
+
+            $("#@Html.FieldIdFor(m => Model.PlaceName)").autocomplete({
+                source: '@Url.Content("~/Admin/PlacesField/Yelp/Places")'
+                    + '?categories='
+                    + $("#@Html.FieldIdFor(m => Model.Category)").val()
+                    + '&postalCode='
+                    + $("#@Html.FieldIdFor(m => Model.PostalCode)").val(),
+                minLength: 1,
+                select: function (event, ui) {
+                    $("#@Html.FieldIdFor(m => Model.PlaceLatLong)")
+                        .val(ui.item.value);
+                    $("#@Html.FieldIdFor(m => Model.PlaceName)")
+                        .val(ui.item.label);
+                    return false;
+                }
+            });
+
+        });
+
+    });
+</script>
+}

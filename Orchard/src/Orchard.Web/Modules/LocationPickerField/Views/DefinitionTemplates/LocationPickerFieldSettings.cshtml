@@ -1,0 +1,24 @@
+﻿@model LocationPickerField.Settings.LocationPickerFieldSettings
+@using LocationPickerField.Settings;
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.SaveOptions)"
+      class="forcheckbox">Save options</label>  
+    <select id="@Html.FieldIdFor(m => m.SaveOptions)"
+      name="@Html.FieldNameFor(m => m.SaveOptions)">
+        @Html.SelectOption(LocationPickerFieldDisplayOptions.LocationAsString,
+          Model.SaveOptions == LocationPickerFieldDisplayOptions.LocationAsString,
+          "String")
+        @Html.SelectOption(LocationPickerFieldDisplayOptions.LocationDouble,
+          Model.SaveOptions
+            == LocationPickerFieldDisplayOptions.LocationDouble,
+          "Decimal")
+        @Html.SelectOption(LocationPickerFieldDisplayOptions.LocationAsStringAndDouble,
+          Model.SaveOptions
+            == LocationPickerFieldDisplayOptions.LocationAsStringAndDouble,
+          "String and decimal")
+    </select> 
+
+    @Html.ValidationMessageFor(m => m.SaveOptions)
+
+</fieldset>

@@ -1,0 +1,12 @@
+﻿Name: LocationPickerField
+AntiForgery: enabled
+Author: Dan Mincu
+Website: http://www.telekad.com
+Version: 0.3
+OrchardVersion: 1.9.1
+Description: Implements a field that allows for the user to specify a location by driving a google map and double clicking it.
+Features:
+    LocationPickerField:
+        Description: 
+		  The location is saved as a comma delimited string representing the Latitude and Longitude in the decimal format
+		  The map is using Google Maps api.

@@ -1,0 +1,21 @@
+﻿@{
+    Model.Header.Add(Display.Header(), "5");
+    Model.Header.Add(Display.User(), "10");
+    Model.Header.Add(Model.Navigation, "15");
+}
+
+@Display(Model.Header)
+@Display(Model.Sidebar)
+
+<div id="main">
+    @if (Model.Content != null)
+    {
+        @Display(Model.Content)
+    }
+</div>
+@if (Model.MoreContent != null)
+{
+    <div id="more-content">
+        @Display(Model.MoreContent)
+    </div>
+}

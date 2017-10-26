@@ -1,0 +1,56 @@
+﻿@using Orchard.Utility.Extensions
+
+@{
+    Style.Require("jQueryUI_Orchard");
+
+    Script.Require("jQuery");
+    Script.Require("jQueryUtils");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Widget");
+    Script.Require("jQueryUI_Autocomplete");
+    Script.Include("LocationScript.js").AtFoot();
+}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+@{     
+    string name = Model.Name;
+    string mapLink = "";
+    string iframeSource = "";
+    if (@Model.LocationLatLong != null)
+    {
+        mapLink =
+            "http://www.bing.com/maps/?v=2&cp=" +
+            @Model.LocationLatLong +
+                "&lvl=12&dir=0&sty=r&where1=" +
+            @Model.LocationLatLong.ToString();
+
+        iframeSource =
+            "http://www.bing.com/maps/embed/?v=2&cp=" +
+               @Model.LocationLatLong +
+                    "&lvl=15&amp;dir=0&sty=r&where1=" +
+                @Model.LocationLatLong.ToString() +
+                    "&form=LMLTEW&pp=" + @Model.PlaceLatLong +
+                    "&emid=30e5aeb2-f963-4089-e9b3-9bd5dfe07759";
+    }
+
+}
+
+<p class="text-field">
+    @name.CamelFriendly(): 
+    @if (!Model.ShowLink && ! Model.ShowMap) { 
+        <text>@Model.PlaceName</text> 
+    }
+    @if (Model.ShowLink) { 
+        <a href="@mapLink" target="_blank">@Model.PlaceName</a>
+    }
+    @if (Model.ShowMap) {        
+        <text>@Model.PlaceName</text> 
+        <div id="mapviewer">
+            <iframe id="map" scrolling="no" 
+			width="400" height="300" frameborder="0" 
+		     src="@iframeSource">
+            </iframe>
+        </div>        
+    }
+    <input type="hidden" class = "staticGoogleLocation" value=@Model.LocationLatLong />    
+</p>

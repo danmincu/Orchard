@@ -1,0 +1,52 @@
+﻿@model JWPlayer.Models.JWPlayerPart
+
+<fieldset>
+  <legend>JWPlayer Widget</legend>
+  
+  <div class="editor-label">
+    Player Source
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.PlayerSource)
+    @Html.ValidationMessageFor(model => model.PlayerSource)
+  </div>          
+
+  <div class="editor-label">
+    Height
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.Height)
+    @Html.ValidationMessageFor(model => model.Height)
+  </div>
+
+  <div class="editor-label">
+    Width
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.Width)
+    @Html.ValidationMessageFor(model => model.Width)
+  </div>
+
+  <div class="editor-label">
+    Media File
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.MediaFile)
+    @Html.ValidationMessageFor(model => model.MediaFile)
+  </div>
+		
+  <div class="editor-label">
+    Auto Start
+  </div>
+  <div class="editor-field">
+    @Html.CheckBoxFor(model => model.AutoStart)    
+  </div>
+
+  <div class="editor-label">
+    Repeat
+  </div>
+  <div class="editor-field">
+    @Html.CheckBoxFor(model => model.Repeat)    
+  </div>
+ 
+</fieldset>
